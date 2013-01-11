@@ -20,7 +20,7 @@ module SeoParams
     
     def yandex_catalog
       query = Nokogiri::XML(open("http://bar-navig.yandex.ru/u?ver=2&show=32&url=#{@url}"))
-      yaca = query.xpath('//yaca@url')
+      yaca = query.xpath('//@url')
       yaca.to_s.empty? ? false : true
     end
     
@@ -32,7 +32,7 @@ module SeoParams
     
     def cy
       query = Nokogiri::XML(open("http://bar-navig.yandex.ru/u?ver=2&show=32&url=#{@url}"))
-      {tic: query.xpath('//@value').to_s.to_i, yaca: query.xpath('//yaca@url').to_s.empty? ? false : true, rang: query.xpath('//@rang').to_s.to_i}
+      {tic: query.xpath('//@value').to_s.to_i, yaca: query.xpath('//@url').to_s.empty? ? false : true, rang: query.xpath('//@rang').to_s.to_i}
     end
 
     def yandex_pages
