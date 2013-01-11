@@ -37,6 +37,14 @@ module SeoParams
     def yap(url)
       Yandex.new(url).yandex_pages
     end
+    
+    def yaca(url)
+      Yandex.new(url).yandex_catalog
+    end
+    
+    def yapr(url)
+      Yandex.new(url).yandex_rang
+    end
 
     def gp(url)
       Google.new(url).google_pages
