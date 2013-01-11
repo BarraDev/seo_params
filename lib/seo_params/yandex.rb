@@ -29,6 +29,11 @@ module SeoParams
       rang = query.xpath('//@rang')
       rang.to_s.to_i
     end
+    
+    def cy
+      query = Nokogiri::XML(open("http://bar-navig.yandex.ru/u?ver=2&show=32&url=#{@url}"))
+      {tic: query.xpath('//@value').to_s.to_i, yaca: query.xpath('//yaca@url').to_s.empty? ? false : true, rang: query.xpath('//@rang').to_s.to_i}
+    end
 
     def yandex_pages
       pages = ask_yandex(@url)
