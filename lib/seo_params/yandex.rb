@@ -69,7 +69,7 @@ module SeoParams
     private
       def ask_yandex(url)
 
-        doc = Nokogiri::HTML(open("http://webmaster.yandex.ua/check.xml?hostname=#{url}"))
+        doc = Nokogiri::HTML(open("http://webmaster.yandex.ru/check.xml?hostname=#{url}"))
 
         if doc.css('div.error-message').length > 0
 
