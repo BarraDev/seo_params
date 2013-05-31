@@ -20,7 +20,7 @@ module SeoParams
     
     def yandex_catalog
       query = Nokogiri::XML(open("http://bar-navig.yandex.ru/u?ver=2&show=32&url=#{@url}"))
-      yaca = query.xpath('//@url')
+      yaca = query.xpath('//@title')
       yaca.to_s.empty? ? false : true
     end
     
