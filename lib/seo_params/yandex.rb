@@ -70,13 +70,11 @@ module SeoParams
       def ask_yandex(url)
 
         doc = Nokogiri::HTML(open("http://webmaster.yandex.ru/check.xml?hostname=#{url}"))
-
+        index = nil
         if doc.css('div.error-message').length > 0
           if doc.css('div.error-message').text().strip == "Сайт не проиндексирован." ||
              doc.css('div.error-message').text().strip == "Сайт не проіндексовано."
-            inder = 0
-          else
-            index = doc.css('div.error-message').children().children()[1].text()[0..-3].lstrip
+            index = 0
           end
         else
 
