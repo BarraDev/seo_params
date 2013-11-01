@@ -12,8 +12,7 @@ module SeoParams
     end
 
     def yahoo_pages
-      index = @response.xpath("//span[@id='resultCount']").first.children.to_s.delete! ","
-      index.to_i
+      @response.xpath("//div[@id='pg']").first.children.last.text.delete(",").to_i
     end
 
   end
