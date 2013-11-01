@@ -12,8 +12,8 @@ module SeoParams
     end
 
     def bing_pages
-      index = @response.css("span.sb_count").first.text.to_s[/[\d,]+/].delete! ","
-      index.to_i
+      index = @response.xpath("//span[@id='count']")
+      index.first.text.delete(",").to_i unless index.first.nil?
     end
 
   end

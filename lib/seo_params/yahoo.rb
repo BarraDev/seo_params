@@ -12,8 +12,8 @@ module SeoParams
     end
 
     def yahoo_pages
-      return @response.xpath("//div[@id='pg']").first.children.last.text.delete(",").to_i unless @response.xpath("//div[@id='pg']").first.nil?
-      ''
+      index = @response.xpath("//div[@id='pg']")
+      index.first.children.last.text.delete(",").to_i unless index.first.nil?
     end
 
   end
