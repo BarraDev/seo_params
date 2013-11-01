@@ -17,6 +17,23 @@ module SeoParams
       tic = query.xpath('//@value')
       tic.to_s.to_i
     end
+    
+    def yandex_catalog
+      query = Nokogiri::XML(open("http://bar-navig.yandex.ru/u?ver=2&show=32&url=#{@url}"))
+      yaca = query.xpath('//@title')
+      yaca.to_s.empty? ? false : true
+    end
+    
+    def yandex_rang
+      query = Nokogiri::XML(open("http://bar-navig.yandex.ru/u?ver=2&show=32&url=#{@url}"))
+      rang = query.xpath('//@rang')
+      rang.to_s.to_i
+    end
+    
+    def cy
+      query = Nokogiri::XML(open("http://bar-navig.yandex.ru/u?ver=2&show=32&url=#{@url}"))
+      {tic: query.xpath('//@value').to_s.to_i, yaca: query.xpath('//@url').to_s.empty? ? false : true, rang: query.xpath('//@rang').to_s.to_i}
+    end
 
     def yandex_pages
       pages = ask_yandex(@url)
@@ -52,12 +69,13 @@ module SeoParams
     private
       def ask_yandex(url)
 
-        doc = Nokogiri::HTML(open("http://webmaster.yandex.ua/check.xml?hostname=#{url}"))
-
+        doc = Nokogiri::HTML(open("http://webmaster.yandex.ru/check.xml?hostname=#{url}"))
+        index = nil
         if doc.css('div.error-message').length > 0
-
-          index = doc.css('div.error-message').children().children()[1].text()[0..-3].lstrip
-
+          if doc.css('div.error-message').text().strip == "Сайт не проиндексирован." ||
+             doc.css('div.error-message').text().strip == "Сайт не проіндексовано."
+            index = 0
+          end
         else
 
           index = doc.css('div.header div').text()[/\d+/].to_i
